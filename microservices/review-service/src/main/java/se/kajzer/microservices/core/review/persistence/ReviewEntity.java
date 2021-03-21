@@ -1,14 +1,13 @@
 package se.kajzer.microservices.core.review.persistence;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Version;
+import org.springframework.data.mongodb.core.index.CompoundIndex;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Index;
-import javax.persistence.Table;
 
-@Entity
-@Table(name = "reviews", indexes = { @Index(name = "reviews_unique_idx", unique = true, columnList = "productId,reviewId") })
+@Document(collection = "reviews")
+@CompoundIndex(name = "prod-rev-id", unique = true, def = "{'productId': 1, 'reviewId': 1}")
 public class ReviewEntity {
 
     @Id

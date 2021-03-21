@@ -82,7 +82,7 @@ public class ProductCompositeIntegration implements ProductService, Recommendati
             LOG.debug("Will post a new product to URL: {}", productServiceUrl);
 
             Product product = restTemplate.postForObject(productServiceUrl, body, Product.class);
-            LOG.debug("Found a product with id: {}", product.getProductId());
+            LOG.debug("Created a product with id: {}", product.getProductId());
 
             return product;
         } catch (HttpClientErrorException e) {
@@ -116,6 +116,41 @@ public class ProductCompositeIntegration implements ProductService, Recommendati
         } catch (Exception ex) {
             LOG.warn("Got an exception while requesting recommendations, return zero recommendations: {}", ex.getMessage());
             return new ArrayList<>();
+        }
+    }
+
+    @Override
+    public Recommendation createRecommendation(Recommendation body) {
+        try {
+            String url = recommendationServiceUrl;
+            LOG.debug("Will post recommendation with recommendationId: " + body.getRecommendationId());
+
+            Recommendation recommendation = restTemplate.postForObject(url, body, Recommendation.class);
+            LOG.debug("Created recommendation with recommendationId: " + body.getRecommendationId());
+
+            return recommendation;
+        } catch (HttpClientErrorException e) {
+            throw handleHttpClientException(e);
+        }
+    }
+
+    @Override
+    public void deleteRecommendation(int recommendationId) {
+        try {
+            String url = recommendationServiceUrl + "/" + recommendationId;
+            restTemplate.delete(url);
+        } catch (HttpClientErrorException e) {
+            throw handleHttpClientException(e);
+        }
+    }
+
+    @Override
+    public void deleteRecommendations(int productId) {
+        try {
+            String url = recommendationServiceUrl + "?productId=" + productId;
+            restTemplate.delete(url);
+        } catch (HttpClientErrorException e) {
+            throw handleHttpClientException(e);
         }
     }
 

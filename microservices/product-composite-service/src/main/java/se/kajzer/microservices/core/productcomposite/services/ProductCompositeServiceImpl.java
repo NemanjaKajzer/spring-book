@@ -53,14 +53,14 @@ public class ProductCompositeServiceImpl implements ProductCompositeService {
                 body.getRecommendations().forEach(recommendationSummary -> {
                     Recommendation recommendation = new Recommendation(body.getProductId(), recommendationSummary.getRecommendationId(), recommendationSummary.getAuthor(),
                             recommendationSummary.getRate(), recommendationSummary.getContent(), null);
-                    //dodaj kroz integration recommendation
+                    integration.createRecommendation(recommendation);
                 });
             }
 
             if (body.getReviews() != null) {
                 body.getReviews().forEach(reviewSummary -> {
                     Review review = new Review(body.getProductId(), reviewSummary.getReviewId(), reviewSummary.getAuthor(), reviewSummary.getSubject(), reviewSummary.getContent(), null);
-                    //dodaj kroz integration review
+                    integration.createReview(review);
                 });
             }
         } catch (RuntimeException re) {
@@ -75,9 +75,9 @@ public class ProductCompositeServiceImpl implements ProductCompositeService {
 
         integration.deleteProduct(productId);
 
-        //integration.deleteRecommendations(productId);
+        integration.deleteRecommendations(productId);
 
-        //integration.deleteReviews(productId);
+        integration.deleteReviews(productId);
 
         LOG.debug("getCompositeProduct: aggregate entities deleted for productId: {}", productId);
     }

@@ -18,7 +18,9 @@ public interface ReviewService {
     List<Review> getReviews(@RequestParam(value = "productId", required = true) int productId);
 
     /**
-     * curl -X POST $HOST:$PORT/review \
+     ** Sample usage:
+     *
+     *  curl -X POST $HOST:$PORT/review \
      * {"productId":123,"reviewId":456,"author":"me","subject":"yada, yada, yada","content":"yada, yada, yada"}'
      *
      * @param body
@@ -30,6 +32,7 @@ public interface ReviewService {
     Review createReview(@RequestBody Review body);
 
     /**
+     * Sample usage:
      *
      * curl -X DELETE $HOST:$PORT/review/1
      *
@@ -39,6 +42,7 @@ public interface ReviewService {
     void deleteReview(@PathVariable int reviewId);
 
     /**
+     * Sample usage:
      *
      * curl -X DELETE $HOST:$PORT/review?productId=1
      *

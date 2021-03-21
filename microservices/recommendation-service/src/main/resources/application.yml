@@ -6,7 +6,15 @@ logging:
     root: INFO
     se.kajzer: DEBUG
 
+spring.data.mongodb:
+  host: localhost
+  port: 27017
+  database: recommendation-db
+  org.springframework.data.mongodb.core.MongoTemplate: DEBUG
+
 ---
 spring.profiles: docker
+
+spring.data.mongodb.host: mongodb
 
 server.port: 8080
